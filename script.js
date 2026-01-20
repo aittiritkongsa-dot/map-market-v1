@@ -6,22 +6,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap'
 }).addTo(map);
 
-// หมุดสินค้าตัวอย่าง
-const items = [
-    {
-        name: "จักรยานมือสอง",
-        price: "2,500 บาท",
-        lat: 13.7563,
-        lng: 100.5018
-    },
-    {
-        name: "โต๊ะคอมพิวเตอร์",
-        price: "1,200 บาท",
-        lat: 13.7463,
-        lng: 100.4918
-    }
-];
-
 // วนลูปสร้างหมุด
 items.forEach(item => {
     L.marker([item.lat, item.lng])
@@ -34,5 +18,49 @@ items.forEach(item => {
 
 // ปุ่มลงขาย (ยังไม่ทำจริง)
 document.getElementById("sellBtn").onclick = () => {
-    alert("เวอร์ชันแรก: ระบบลงขายกำลังพัฒนา");
+    alert("👉 คลิกบนแผนที่เพื่อเลือกตำแหน่งสินค้า");
 };
+
+};
+let currentLatLng = null;
+
+// โหลดหมุดที่เคยบันทึก
+let pins = JSON.parse(localStorage.getItem("pins") || "[]");
+pins.forEach(pin => createMarker(pin));
+
+// คลิกแผนที่ = เตรียมปักหมุด
+map.on("click", e => {
+    currentLatLng = e.latlng;
+    document.getElementById("formBox").style.display = "block";
+});
+
+// บันทึกหมุด
+function savePin() {
+    if (!currentLatLng) return;
+
+    const pin = {
+        name: document.getElementById("title").value,
+        price: document.getElementById("price").value,
+        detail: document.getElementById("detail").value,
+        lat: currentLatLng.lat,
+        lng: currentLatLng.lng
+    };
+
+    pins.push(pin);
+    localStorage.setItem("pins", JSON.stringify(pins));
+    createMarker(pin);
+
+    document.getElementById("formBox").style.display = "none";
+}
+
+// สร้างหมุด
+function createMarker(pin) {
+    L.marker([pin.lat, pin.lng])
+        .addTo(map)
+        .bindPopup(`
+            <b>${pin.name}</b><br>
+            💰 ${pin.price}<br>
+            ${pin.detail || ""}
+        `);
+}
+
