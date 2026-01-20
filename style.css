@@ -1,27 +1,18 @@
-/* =====================
-   Global
-===================== */
 html, body {
   height: 100%;
   margin: 0;
 }
 
-/* =====================
-   Header
-===================== */
+/* Header */
 .header {
   height: 60px;
   background: #222;
   color: white;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 0 16px;
   box-sizing: border-box;
-
-  position: relative;
   z-index: 10;
 }
 
@@ -31,17 +22,10 @@ html, body {
   border-radius: 5px;
   background: #00c853;
   color: white;
-  font-size: 14px;
   cursor: pointer;
 }
 
-.header button:hover {
-  background: #00a844;
-}
-
-/* =====================
-   Logo
-===================== */
+/* Logo */
 .logo {
   display: flex;
   align-items: center;
@@ -50,39 +34,26 @@ html, body {
 
 .logo img {
   height: 40px;
-  width: auto;
 }
 
-.logo span {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-/* =====================
-   Map
-===================== */
+/* Map */
 #map {
   width: 100%;
   height: calc(100vh - 60px);
 }
 
-/* =====================
-   Form Box
-===================== */
+/* Form */
 #formBox {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-
   background: white;
   padding: 15px;
   width: 90%;
   max-width: 400px;
-
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,.2);
-
   display: none;
   z-index: 999;
 }
@@ -92,7 +63,6 @@ html, body {
   width: 100%;
   margin: 5px 0;
   padding: 10px;
-
   border-radius: 12px;
   border: 1px solid #ddd;
 }
@@ -100,12 +70,9 @@ html, body {
 #formBox button {
   width: 100%;
   padding: 12px;
-
   background: #ff7a00;
   border: none;
   border-radius: 15px;
-
   color: white;
-  font-size: 16px;
-  cursor: pointer;
 }
+
