@@ -14,11 +14,16 @@ html, body {
   height: 60px;
   background: #222;
   color: white;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 15px;
+
+  padding: 0 16px;
   box-sizing: border-box;
+
+  position: relative;   /* สำคัญ */
+  z-index: 10;
 }
 
 }
