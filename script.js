@@ -1,40 +1,29 @@
-// =====================
-// สร้างแผนที่ (เริ่มที่ประเทศไทย)
-// =====================
-const map = L.map("map").setView([13.7563, 100.5018], 12);
+// สร้างแผนที่
+const map = L.map('map').setView([13.7563, 100.5018], 12);
 
-// โหลดแผนที่ OpenStreetMap
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: "© OpenStreetMap"
+// โหลดแผนที่
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
 }).addTo(map);
 
-// =====================
-// ตัวแปรหลัก
-// =====================
 let currentLatLng = null;
 
-// โหลดหมุดที่เคยบันทึกจาก localStorage
+// โหลดหมุดที่เคยบันทึก
 let pins = JSON.parse(localStorage.getItem("pins") || "[]");
 pins.forEach(pin => createMarker(pin));
 
-// =====================
-// ปุ่มลงขายของ
-// =====================
+// คลิกปุ่มลงขาย
 document.getElementById("sellBtn").onclick = () => {
-  alert("📍 คลิกบนแผนที่เพื่อเลือกตำแหน่งสินค้า");
+  alert("👉 คลิกบนแผนที่เพื่อเลือกตำแหน่งสินค้า");
 };
 
-// =====================
-// คลิกแผนที่เพื่อปักหมุด
-// =====================
+// คลิกแผนที่
 map.on("click", e => {
   currentLatLng = e.latlng;
   document.getElementById("formBox").style.display = "block";
 });
 
-// =====================
 // บันทึกหมุด
-// =====================
 function savePin() {
   if (!currentLatLng) return;
 
@@ -50,17 +39,10 @@ function savePin() {
   localStorage.setItem("pins", JSON.stringify(pins));
   createMarker(pin);
 
-  // รีเซ็ตฟอร์ม
-  document.getElementById("title").value = "";
-  document.getElementById("price").value = "";
-  document.getElementById("detail").value = "";
   document.getElementById("formBox").style.display = "none";
-  currentLatLng = null;
 }
 
-// =====================
-// สร้างหมุดบนแผนที่
-// =====================
+// สร้างหมุด
 function createMarker(pin) {
   L.marker([pin.lat, pin.lng])
     .addTo(map)
@@ -70,4 +52,3 @@ function createMarker(pin) {
       ${pin.detail || ""}
     `);
 }
-
