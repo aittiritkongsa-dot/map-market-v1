@@ -1,15 +1,14 @@
+/* =====================
+   Global
+===================== */
 html, body {
-    height: 100%;
-    margin: 0;
+  height: 100%;
+  margin: 0;
 }
 
-#map {
-    height: calc(100vh - 60px);
-    width: 100%;
-}
-
-
-/* Header */
+/* =====================
+   Header
+===================== */
 .header {
   height: 60px;
   background: #222;
@@ -22,68 +21,78 @@ html, body {
   padding: 0 16px;
   box-sizing: border-box;
 
-  position: relative;   /* สำคัญ */
+  position: relative;
   z-index: 10;
 }
 
-}
-
 .header button {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 5px;
-    background: #00c853;
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  background: #00c853;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .header button:hover {
-    background: #00a844;
+  background: #00a844;
 }
 
-/* Map */
-#map {
-    width: 100%;
-    height: calc(100vh - 60px);
-}
+/* =====================
+   Logo
+===================== */
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .logo img {
-    height: 40px;
-    width: auto;
-}
-
+  height: 40px;
+  width: auto;
 }
 
 .logo span {
-    font-size: 18px;
-    font-weight: bold;
+  font-size: 18px;
+  font-weight: bold;
 }
+
+/* =====================
+   Map
+===================== */
+#map {
+  width: 100%;
+  height: calc(100vh - 60px);
+}
+
+/* =====================
+   Form Box
+===================== */
 #formBox {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+
   background: white;
   padding: 15px;
   width: 90%;
   max-width: 400px;
+
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,.2);
+
   display: none;
   z-index: 999;
 }
 
-#formBox input, 
+#formBox input,
 #formBox textarea {
   width: 100%;
   margin: 5px 0;
   padding: 10px;
+
   border-radius: 12px;
   border: 1px solid #ddd;
 }
@@ -91,26 +100,12 @@ html, body {
 #formBox button {
   width: 100%;
   padding: 12px;
+
   background: #ff7a00;
   border: none;
   border-radius: 15px;
+
   color: white;
   font-size: 16px;
+  cursor: pointer;
 }
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-/* แถบด้านบน */
-.header {
-  height: 60px;
-}
-
-/* แผนที่ */
-#map {
-  height: calc(100vh - 60px);
-  width: 100%;
-}
-
-
