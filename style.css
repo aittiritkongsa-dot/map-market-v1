@@ -32,3 +32,18 @@ body {
     width: 100%;
     height: calc(100vh - 60px);
 }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.logo span {
+    font-size: 18px;
+    font-weight: bold;
+}
+
