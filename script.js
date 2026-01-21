@@ -63,4 +63,20 @@ function savePin() {
     // รีเซ็ตตำแหน่งที่เลือก
     currentLatLng = null;
 }
+let isLoggedIn = true; // mock ก่อน
+let selectedLatLng = null;
+
+map.on("click", (e) => {
+  if (!isLoggedIn) {
+    alert("กรุณาเข้าสู่ระบบก่อนลงขาย");
+    return;
+  }
+
+  selectedLatLng = e.latlng;
+  openForm();
+});
+    function openForm() {
+  document.getElementById("formBox").style.display = "block";
+}
+
 
