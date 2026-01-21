@@ -15,6 +15,59 @@
         * {
             box-sizing: border-box;
             font-family: 'Prompt', sans-serif;
+            /* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+
+  .header {
+    padding: 0 10px;
+  }
+
+  .logo span {
+    font-size: 16px;
+  }
+
+  .auth-btns button {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  #map {
+    height: calc(100vh - 60px);
+  }
+
+  #formBox {
+    width: calc(100% - 20px);
+    right: 10px;
+    left: 10px;
+    top: auto;
+    bottom: 10px;
+    border-radius: 16px;
+  }
+
+  #formBox h3 {
+    font-size: 16px;
+  }
+
+  #formBox input,
+  #formBox textarea {
+    font-size: 14px;
+  }
+
+  #preview img {
+    width: 50px;
+  }
+
+  .form-actions {
+    gap: 10px;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    padding: 10px;
+    font-size: 15px;
+  }
+}
+
         }
 
         body {
