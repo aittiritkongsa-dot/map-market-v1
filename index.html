@@ -47,17 +47,36 @@
             height: 32px;
         }
 
-        #sellBtn {
-            background: #22c55e;
-            border: none;
-            color: white;
+        /* ===== Auth Buttons (โค้ดของคุณ) ===== */
+        .auth-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        #loginBtn {
+            background: transparent;
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
             padding: 8px 14px;
             border-radius: 6px;
-            font-size: 14px;
             cursor: pointer;
         }
 
-        #sellBtn:hover {
+        #loginBtn:hover {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        #registerBtn {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #registerBtn:hover {
             background: #16a34a;
         }
 
@@ -132,18 +151,19 @@
         }
     </style>
 </head>
+
 <body>
 
 <div class="header">
-  <div class="logo">
-    <img src="logo.png">
-    <span>Pin2Deal</span>
-  </div>
+    <div class="logo">
+        <img src="logo.png">
+        <span>Pin2Deal</span>
+    </div>
 
-  <div class="auth-btns">
-    <button id="loginBtn">เข้าสู่ระบบ</button>
-    <button id="registerBtn">สมัครสมาชิก</button>
-  </div>
+    <div class="auth-btns">
+        <button id="loginBtn">เข้าสู่ระบบ</button>
+        <button id="registerBtn">สมัครสมาชิก</button>
+    </div>
 </div>
 
 <div id="map"></div>
