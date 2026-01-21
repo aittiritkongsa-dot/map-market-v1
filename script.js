@@ -11,6 +11,7 @@ document.getElementById("sellBtn").onclick = () => {
     document.getElementById("formBox").style.display = "block";
 };
 
+
 // ปิดฟอร์ม
 function closeForm() {
     document.getElementById("formBox").style.display = "none";
@@ -18,7 +19,9 @@ function closeForm() {
 
 // คลิกแผนที่เพื่อเลือกจุด
 map.on('click', (e) => {
-    currentLatLng = e.latlng;
+    if (document.getElementById("formBox").style.display === "block") {
+        currentLatLng = e.latlng;
+    }
 });
 
 // บันทึกหมุด
@@ -49,8 +52,15 @@ function savePin() {
     };
 
     // รีเซ็ต
-    closeForm();
+   function closeForm() {
+    document.getElementById("formBox").style.display = "none";
+
+    // รีเซ็ตฟอร์ม
     document.getElementById("title").value = "";
     document.getElementById("price").value = "";
     document.getElementById("detail").value = "";
+
+    // รีเซ็ตตำแหน่งที่เลือก
+    currentLatLng = null;
 }
+
