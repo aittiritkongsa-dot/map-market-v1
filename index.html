@@ -1,366 +1,175 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>Pin2Deal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-    <!-- Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<meta charset="UTF-8">
+<title>Pin2Deal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
 
-   <style>
-    * {
-        box-sizing: border-box;
-        font-family: 'Prompt', sans-serif;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Prompt', sans-serif;
+}
 
-    body {
-        margin: 0;
-        background: #f4f6f8;
-    }
+body {
+  margin: 0;
+  background: #f4f6f8;
+}
 
-    /* ===== Header ===== */
-    .header {
-        height: 60px;
-        background: #111827;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 16px;
-        position: relative;
-        z-index: 1001;
-    }
+/* ===== Header ===== */
+.header {
+  height: 60px;
+  background: #111827;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  position: relative;
+  z-index: 1001;
+}
 
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 600;
-        font-size: 18px;
-    }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 18px;
+}
 
-    .logo img {
-        width: 32px;
-        height: 32px;
-    }
+.logo img {
+  width: 32px;
+}
 
-    /* ===== Auth Buttons ===== */
-    .auth-btns {
-        display: flex;
-        gap: 8px;
-    }
+/* ===== Auth Buttons ===== */
+.auth-btns {
+  display: flex;
+  gap: 8px;
+}
 
-    #loginBtn {
-        background: transparent;
-        border: 1px solid #3b82f6;
-        color: #3b82f6;
-        padding: 8px 14px;
-        border-radius: 6px;
-        cursor: pointer;
-    }
+#loginBtn {
+  background: transparent;
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
 
-    #loginBtn:hover {
-        background: #1e3a8a;
-        color: white;
-    }
+#registerBtn {
+  background: #22c55e;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
 
-    #registerBtn {
-        background: #22c55e;
-        color: white;
-        border: none;
-        padding: 8px 14px;
-        border-radius: 6px;
-        cursor: pointer;
-    }
+/* ===== Map ===== */
+#map {
+  height: calc(100vh - 60px);
+  width: 100%;
+}
 
-    #registerBtn:hover {
-        background: #16a34a;
-    }
+/* ===== Form ===== */
+#formBox {
+  display: none;
+  position: absolute;
+  top: 80px;
+  right: 16px;
+  width: 280px;
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 1002;
+}
 
-    /* ===== Map ===== */
-    #map {
-        height: calc(100vh - 60px);
-        width: 100%;
-    }
+#formBox input,
+#formBox textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
 
-    /* ===== Form ===== */
-    #formBox {
-        display: none;
-        position: absolute;
-        top: 80px;
-        right: 16px;
-        z-index: 1002;
-        width: 280px;
-        background: white;
-        padding: 16px;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+textarea {
+  resize: none;
+  height: 70px;
+}
 
-    #formBox h3 {
-        margin-top: 0;
-        margin-bottom: 12px;
-    }
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
 
-    #formBox input,
-    #formBox textarea {
-        width: 100%;
-        padding: 8px;
-        border-radius: 6px;
-        border: 1px solid #ddd;
-        font-size: 14px;
-    }
+.save-btn {
+  flex: 1;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+}
 
-    #formBox textarea {
-        resize: none;
-        height: 70px;
-    }
+.cancel-btn {
+  flex: 1;
+  background: #e5e7eb;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+}
 
-    .form-actions {
-        display: flex;
-        gap: 8px;
-        margin-top: 10px;
-    }
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+  .logo span { font-size: 16px; }
 
-    .save-btn {
-        flex: 1;
-        background: #2563eb;
-        color: white;
-        border: none;
-        padding: 8px;
-        border-radius: 6px;
-        cursor: pointer;
-    }
+  .auth-btns button {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
 
-    .cancel-btn {
-        flex: 1;
-        background: #e5e7eb;
-        border: none;
-        padding: 8px;
-        border-radius: 6px;
-        cursor: pointer;
-    }
-
-    .hint {
-        font-size: 12px;
-        color: #6b7280;
-        margin-top: 6px;
-    }
-
-    /* ===== Mobile Responsive (✔ ถูกต้องแล้ว) ===== */
-    @media (max-width: 768px) {
-
-        .header {
-            padding: 0 10px;
-        }
-
-        .logo span {
-            font-size: 16px;
-        }
-
-        .auth-btns button {
-            padding: 6px 10px;
-            font-size: 13px;
-        }
-
-        #formBox {
-            width: calc(100% - 20px);
-            left: 10px;
-            right: 10px;
-            top: auto;
-            bottom: 10px;
-            border-radius: 16px;
-        }
-
-        #preview img {
-            width: 50px;
-        }
-
-        .save-btn,
-        .cancel-btn {
-            padding: 10px;
-            font-size: 15px;
-        }
-    }
+  #formBox {
+    width: calc(100% - 20px);
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    top: auto;
+    border-radius: 16px;
+  }
+}
 </style>
-
-        }
-
-        body {
-            margin: 0;
-            background: #f4f6f8;
-        }
-
-        /* ===== Header ===== */
-        .header {
-            height: 60px;
-            background: #111827;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            position: relative;
-            z-index: 1001;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            font-size: 18px;
-        }
-
-        .logo img {
-            width: 32px;
-            height: 32px;
-        }
-
-        /* ===== Auth Buttons (โค้ดของคุณ) ===== */
-        .auth-btns {
-            display: flex;
-            gap: 8px;
-        }
-
-        #loginBtn {
-            background: transparent;
-            border: 1px solid #3b82f6;
-            color: #3b82f6;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        #loginBtn:hover {
-            background: #1e3a8a;
-            color: white;
-        }
-
-        #registerBtn {
-            background: #22c55e;
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        #registerBtn:hover {
-            background: #16a34a;
-        }
-
-        /* ===== Map ===== */
-        #map {
-            height: calc(100vh - 60px);
-            width: 100%;
-        }
-
-        /* ===== Form ===== */
-        #formBox {
-            display: none;
-            position: absolute;
-            top: 80px;
-            right: 16px;
-            z-index: 1002;
-            width: 280px;
-            background: white;
-            padding: 16px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        #formBox h3 {
-            margin-top: 0;
-            margin-bottom: 12px;
-        }
-
-        #formBox input,
-        #formBox textarea {
-            width: 100%;
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            font-size: 14px;
-        }
-
-        #formBox textarea {
-            resize: none;
-            height: 70px;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .save-btn {
-            flex: 1;
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 8px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .cancel-btn {
-            flex: 1;
-            background: #e5e7eb;
-            border: none;
-            padding: 8px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .hint {
-            font-size: 12px;
-            color: #6b7280;
-            margin-top: 6px;
-        }
-    </style>
 </head>
 
 <body>
 
 <div class="header">
-    <div class="logo">
-        <img src="logo.png">
-        <span>Pin2Deal</span>
-    </div>
-
-    <div class="auth-btns">
-        <button id="loginBtn">เข้าสู่ระบบ</button>
-        <button id="registerBtn">สมัครสมาชิก</button>
-    </div>
+  <div class="logo">
+    <img src="logo.png">
+    <span>Pin2Deal</span>
+  </div>
+  <div class="auth-btns">
+    <button id="loginBtn">เข้าสู่ระบบ</button>
+    <button id="registerBtn">สมัครสมาชิก</button>
+  </div>
 </div>
 
 <div id="map"></div>
 
 <div id="formBox">
-    <h3>📦 ลงขายสินค้า</h3>
-
-    <input id="title" placeholder="ชื่อสินค้า"><br><br>
-    <input id="price" placeholder="ราคา (บาท)"><br><br>
-    <textarea id="detail" placeholder="รายละเอียดสินค้า"></textarea>
-    <input type="file" id="images" multiple accept="image/*">
-<div id="preview"></div>
-
-
-    <div class="hint">* คลิกบนแผนที่เพื่อเลือกตำแหน่ง</div>
-
-    <div class="form-actions">
-        <button class="save-btn" onclick="savePin()">บันทึก</button>
-        <button class="cancel-btn" onclick="closeForm()">ยกเลิก</button>
-    </div>
+  <h3>📦 ลงขายสินค้า</h3>
+  <input id="title" placeholder="ชื่อสินค้า">
+  <input id="price" placeholder="ราคา">
+  <textarea id="detail" placeholder="รายละเอียด"></textarea>
+  <input type="file" id="images" multiple>
+  <div class="form-actions">
+    <button class="save-btn">บันทึก</button>
+    <button class="cancel-btn">ยกเลิก</button>
+  </div>
 </div>
 
-<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="script.js"></script>
 </body>
