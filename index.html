@@ -2,17 +2,133 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>pin2buy</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="style.css">
+    <title>Pin2Deal</title>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
-        /* เพิ่มสไตล์พื้นฐานเพื่อให้แสดงผลได้ */
-        #map { height: 85vh; width: 100%; }
-        #formBox { 
-            display: none; /* ปิดไว้ก่อน จะเปิดเมื่อกดลงขาย */
-            position: absolute; top: 70px; right: 10px; 
-            z-index: 1000; background: white; padding: 15px;
-            border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        * {
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+        }
+
+        /* ===== Header ===== */
+        .header {
+            height: 60px;
+            background: #111827;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .logo img {
+            width: 32px;
+            height: 32px;
+        }
+
+        #sellBtn {
+            background: #22c55e;
+            border: none;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        #sellBtn:hover {
+            background: #16a34a;
+        }
+
+        /* ===== Map ===== */
+        #map {
+            height: calc(100vh - 60px);
+            width: 100%;
+        }
+
+        /* ===== Form ===== */
+        #formBox {
+            display: none;
+            position: absolute;
+            top: 80px;
+            right: 16px;
+            z-index: 1002;
+            width: 280px;
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        #formBox h3 {
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        #formBox input,
+        #formBox textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        #formBox textarea {
+            resize: none;
+            height: 70px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .save-btn {
+            flex: 1;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            flex: 1;
+            background: #e5e7eb;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 6px;
         }
     </style>
 </head>
@@ -20,24 +136,30 @@
 
 <div class="header">
     <div class="logo">
-        <img src="logo.png" alt="Pin2Deal Logo" style="width:30px;">
+        <img src="logo.png" alt="Pin2Deal">
         <span>Pin2Deal</span>
     </div>
-    <button id="sellBtn">ลงขายของ</button>
+    <button id="sellBtn">➕ ลงขายของ</button>
 </div>
 
 <div id="map"></div>
 
 <div id="formBox">
     <h3>📦 ลงขายสินค้า</h3>
+
     <input id="title" placeholder="ชื่อสินค้า"><br><br>
-    <input id="price" placeholder="ราคา"><br><br>
-    <textarea id="detail" placeholder="รายละเอียด"></textarea><br><br>
-    <p style="font-size: 12px; color: gray;">*คลิกบนแผนที่เพื่อเลือกจุดวางสินค้า</p>
-    <button onclick="savePin()">บันทึก</button>
-    <button onclick="closeForm()">ยกเลิก</button>
+    <input id="price" placeholder="ราคา (บาท)"><br><br>
+    <textarea id="detail" placeholder="รายละเอียดสินค้า"></textarea>
+
+    <div class="hint">* คลิกบนแผนที่เพื่อเลือกตำแหน่ง</div>
+
+    <div class="form-actions">
+        <button class="save-btn" onclick="savePin()">บันทึก</button>
+        <button class="cancel-btn" onclick="closeForm()">ยกเลิก</button>
+    </div>
 </div>
 
+<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="script.js"></script>
 </body>
