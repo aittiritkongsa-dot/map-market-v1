@@ -78,5 +78,24 @@ map.on("click", (e) => {
     function openForm() {
   document.getElementById("formBox").style.display = "block";
 }
+const input = document.getElementById("images");
+const preview = document.getElementById("preview");
 
+input.addEventListener("change", () => {
+  preview.innerHTML = "";
+
+  if (input.files.length > 5) {
+    alert("อัปโหลดได้สูงสุด 5 รูป");
+    input.value = "";
+    return;
+  }
+
+  [...input.files].forEach(file => {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    img.style.width = "60px";
+    img.style.margin = "4px";
+    preview.appendChild(img);
+  });
+});
 
