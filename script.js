@@ -10,8 +10,29 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 /* ===============================
    STATE
 ================================ */
+let currentUser = JSON.parse(localStorage.getItem("user"));
 let selectedLatLng = null;
-let isLoggedIn = true; // mock login ก่อน
+let userLocation = null;
+const markers = {};
+
+/* ===============================
+   AUTH (Prototype)
+================================ */
+document.getElementById("loginBtn").onclick = () => {
+  const name = prompt("ชื่อผู้ใช้:");
+  if (!name) return;
+  currentUser = { id: Date.now(), name };
+  localStorage.setItem("user", JSON.stringify(currentUser));
+  alert("เข้าสู่ระบบสำเร็จ");
+};
+
+document.getElementById("registerBtn").onclick = () => {
+  const name = prompt("ตั้งชื่อบัญชี:");
+  if (!name) return;
+  currentUser = { id: Date.now(), name };
+  localStorage.setItem("user", JSON.stringify(currentUser));
+  alert("สมัครสมาชิกสำเร็จ");
+};
 
 /* ===============================
    FORM CONTROL
@@ -22,111 +43,96 @@ function openForm() {
 
 function closeForm() {
   document.getElementById("formBox").style.display = "none";
-
   document.getElementById("title").value = "";
   document.getElementById("price").value = "";
   document.getElementById("detail").value = "";
-
   selectedLatLng = null;
 }
 
+document.querySelector(".save-btn").onclick = savePin;
+document.querySelector(".cancel-btn").onclick = closeForm;
+
 /* ===============================
-   MAP CLICK (เลือกตำแหน่ง + เปิดฟอร์ม)
+   MAP CLICK
 ================================ */
 map.on("click", (e) => {
-  if (!isLoggedIn) {
+  if (!currentUser) {
     alert("กรุณาเข้าสู่ระบบก่อนลงขาย");
     return;
   }
-
   selectedLatLng = e.latlng;
   openForm();
 });
 
 /* ===============================
+   DISTANCE
+================================ */
+function calcDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat/2)**2 +
+    Math.cos(lat1*Math.PI/180) *
+    Math.cos(lat2*Math.PI/180) *
+    Math.sin(dLon/2)**2;
+  return (R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))).toFixed(2);
+}
+
+/* ===============================
    SAVE PIN
 ================================ */
 function savePin() {
-  const title = document.getElementById("title").value.trim();
-  const price = document.getElementById("price").value.trim();
-  const detail = document.getElementById("detail").value.trim();
-
-  if (!selectedLatLng || !title) {
-    alert("กรุณากรอกข้อมูลและคลิกตำแหน่งบนแผนที่");
+  const title = titleInput.value.trim();
+  if (!title || !selectedLatLng) {
+    alert("กรุณากรอกข้อมูลให้ครบ");
     return;
   }
 
+  const distance = userLocation
+    ? calcDistance(
+        userLocation.lat,
+        userLocation.lng,
+        selectedLatLng.lat,
+        selectedLatLng.lng
+      )
+    : "-";
+
   const marker = L.marker(selectedLatLng).addTo(map);
-
-  const popupContent = `
+  marker.bindPopup(`
     <b>${title}</b><br>
-    💰 ${price || "-"} บาท<br>
-    📝 ${detail || "-"}<br><br>
-    <button onclick="sellDone(${marker._leaflet_id})">✅ ขายแล้ว</button>
-  `;
-
-  marker.bindPopup(popupContent).openPopup();
+    💰 ${price.value || "-"} บาท<br>
+    📍 ห่างคุณ ${distance} กม.<br>
+    📝 ${detail.value || "-"}<br><br>
+    <button onclick="openChat('${currentUser.name}')">💬 แชทผู้ขาย</button>
+  `);
 
   markers[marker._leaflet_id] = marker;
   closeForm();
 }
 
 /* ===============================
-   REMOVE MARKER
+   CHAT (Prototype)
 ================================ */
-const markers = {};
-
-function sellDone(id) {
-  if (markers[id]) {
-    map.removeLayer(markers[id]);
-    delete markers[id];
-  }
-}
-
-/* ===============================
-   IMAGE UPLOAD (≤ 5)
-================================ */
-const input = document.getElementById("images");
-const preview = document.getElementById("preview");
-
-if (input) {
-  input.addEventListener("change", () => {
-    preview.innerHTML = "";
-
-    if (input.files.length > 5) {
-      alert("อัปโหลดได้สูงสุด 5 รูป");
-      input.value = "";
-      return;
-    }
-
-    [...input.files].forEach(file => {
-      const img = document.createElement("img");
-      img.src = URL.createObjectURL(file);
-      img.style.width = "60px";
-      img.style.margin = "4px";
-      preview.appendChild(img);
-    });
-  });
+function openChat(name) {
+  alert("เริ่มแชทกับผู้ขาย: " + name);
 }
 
 /* ===============================
    GEOLOCATION
 ================================ */
 if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      const lat = pos.coords.latitude;
-      const lng = pos.coords.longitude;
+  navigator.geolocation.getCurrentPosition(pos => {
+    userLocation = {
+      lat: pos.coords.latitude,
+      lng: pos.coords.longitude
+    };
 
-      map.setView([lat, lng], 15);
+    L.circleMarker([userLocation.lat, userLocation.lng], {
+      radius: 8,
+      color: "blue"
+    }).addTo(map).bindPopup("📍 ตำแหน่งของคุณ");
 
-      L.circleMarker([lat, lng], {
-        radius: 8,
-        color: "blue"
-      }).addTo(map).bindPopup("📍 ตำแหน่งของคุณ");
-    },
-    () => {
-      alert("ไม่สามารถเข้าถึงตำแหน่งได้");
-    }
-  );
+    map.setView([userLocation.lat, userLocation.lng], 15);
+  });
 }
