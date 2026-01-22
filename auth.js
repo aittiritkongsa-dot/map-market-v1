@@ -1,26 +1,46 @@
-import { auth } from "./firebase.js";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  updateProfile
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-export let currentUser = null;
+const firebaseConfig = {
+  apiKey: "AIzaSyDSE5YwOy8CoHpgaAbi97PPJjBv8lnX8BY",
+  authDomain: "market-80d5b.firebaseapp.com",
+  projectId: "market-80d5b",
+};
 
-export function register(email, password, name) {
-  return createUserWithEmailAndPassword(auth, email, password)
-    .then(res => {
-      return updateProfile(res.user, {
-        displayName: name
-      });
-    });
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// สมัครสมาชิก
+const regBtn = document.getElementById("register");
+if (regBtn) {
+  regBtn.onclick = async () => {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    const msg = document.getElementById("msg");
+    try {
+      await createUserWithEmailAndPassword(auth, email, pass);
+      msg.innerHTML = "✅ สมัครสำเร็จ กำลังเข้าสู่ระบบ...";
+      setTimeout(()=>location.href="index.html",1200);
+    } catch (e) {
+      msg.innerHTML = "❌ " + e.message;
+    }
+  };
 }
 
-export function login(email, password) {
-  return signInWithEmailAndPassword(auth, email, password);
+// ล็อกอิน
+const loginBtn = document.getElementById("login");
+if (loginBtn) {
+  loginBtn.onclick = async () => {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    const msg = document.getElementById("msg");
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      msg.innerHTML = "✅ เข้าสู่ระบบสำเร็จ";
+      setTimeout(()=>location.href="index.html",800);
+    } catch (e) {
+      msg.innerHTML = "❌ อีเมลหรือรหัสผ่านผิด";
+    }
+  };
 }
-
-onAuthStateChanged(auth, user => {
-  currentUser = user;
-});
