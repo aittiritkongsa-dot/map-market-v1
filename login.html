@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>เข้าสู่ระบบ | Pin2Deal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;font-family:'Prompt',sans-serif}
+body{
+  margin:0;height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  background:#111827
+}
+.card{
+  background:#1f2933;color:white;
+  padding:28px;border-radius:16px;
+  width:320px
+}
+input,button{
+  width:100%;padding:10px;margin-bottom:10px;
+  border-radius:8px;border:none
+}
+button{background:#3b82f6;color:white}
+.msg{text-align:center}
+</style>
+</head>
+
+<body>
+<div class="card">
+  <h2>เข้าสู่ระบบ</h2>
+  <input id="email" placeholder="อีเมล">
+  <input id="password" type="password" placeholder="รหัสผ่าน">
+  <button id="login">เข้าสู่ระบบ</button>
+  <div class="msg" id="msg"></div>
+</div>
+
+<script type="module" src="auth.js"></script>
+</body>
+</html>
