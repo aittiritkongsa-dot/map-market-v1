@@ -2,9 +2,10 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>เข้าสู่ระบบ</title>
+<title>เข้าสู่ระบบ | Pin2Deal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+
 <style>
 body{
   font-family:Prompt;
@@ -31,19 +32,24 @@ input,button{
 button{
   background:#3b82f6;
   color:white;
+  cursor:pointer;
 }
 </style>
 </head>
+
 <body>
 
 <div class="card">
   <h2>เข้าสู่ระบบ</h2>
+
   <input id="email" type="email" placeholder="อีเมล">
   <input id="password" type="password" placeholder="รหัสผ่าน">
+
   <button id="loginBtn">ยืนยันการเข้าสู่ระบบ</button>
   <p id="msg"></p>
 </div>
 
+<!-- โหลดแค่ครั้งเดียว -->
 <script type="module" src="auth.js"></script>
 </body>
 </html>
