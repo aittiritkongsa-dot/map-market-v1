@@ -9,136 +9,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: 'Prompt', sans-serif;
+*{box-sizing:border-box;font-family:'Prompt',sans-serif}
+body{margin:0;background:#f4f6f8}
+.header{
+  height:60px;background:#111827;color:white;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px
 }
-
-body {
-  margin: 0;
-  background: #f4f6f8;
-}
-
-/* Header */
-.header {
-  height: 60px;
-  background: #111827;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  z-index: 1001;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-}
-
-.auth-btns {
-  display: flex;
-  gap: 8px;
-}
-
-button {
-  cursor: pointer;
-}
-
-#loginBtn {
-  background: transparent;
-  border: 1px solid #3b82f6;
-  color: #3b82f6;
-  padding: 8px 14px;
-  border-radius: 6px;
-}
-
-#registerBtn {
-  background: #22c55e;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-}
-
-/* Map */
-#map {
-  height: calc(100vh - 60px);
-}
-
-/* Form */
-#formBox {
-  display: none;
-  position: absolute;
-  top: 80px;
-  right: 16px;
-  width: 280px;
-  background: white;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,.2);
-  z-index: 1002;
-}
-
-#formBox input, #formBox textarea {
-  width: 100%;
-  margin-bottom: 6px;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-}
-
-.form-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.save-btn {
-  flex: 1;
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 8px;
-  border-radius: 6px;
-}
-
-.cancel-btn {
-  flex: 1;
-  background: #e5e7eb;
-  border: none;
-  padding: 8px;
-  border-radius: 6px;
-}
+.auth-btns{display:flex;gap:8px}
+button{cursor:pointer;border-radius:6px;padding:8px 14px}
+#loginBtn{border:1px solid #3b82f6;background:none;color:#3b82f6}
+#registerBtn{background:#22c55e;color:white;border:none}
+#map{height:calc(100vh - 60px)}
 </style>
 </head>
 
 <body>
-
 <div class="header">
-  <div class="logo">📍 Pin2Deal</div>
+  <div>📍 Pin2Deal</div>
   <div class="auth-btns">
-    <button id="loginBtn">เข้าสู่ระบบ</button>
-    <button id="registerBtn">สมัครสมาชิก</button>
+    <a href="login.html"><button id="loginBtn">เข้าสู่ระบบ</button></a>
+    <a href="register.html"><button id="registerBtn">สมัครสมาชิก</button></a>
   </div>
 </div>
 
 <div id="map"></div>
 
-<div id="formBox">
-  <h3>📦 ลงขายสินค้า</h3>
-  <input id="title" placeholder="ชื่อสินค้า">
-  <input id="price" placeholder="ราคา">
-  <textarea id="detail" placeholder="รายละเอียด"></textarea>
-  <div class="form-actions">
-    <button class="save-btn">บันทึก</button>
-    <button class="cancel-btn">ยกเลิก</button>
-  </div>
-</div>
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script type="module" src="script.js"></script>
+<script>
+const map = L.map('map').setView([13.736717,100.523186], 6);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+</script>
 </body>
 </html>
-
