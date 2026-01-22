@@ -19,7 +19,7 @@ body {
   background: #f4f6f8;
 }
 
-/* ===== Header ===== */
+/* Header */
 .header {
   height: 60px;
   background: #111827;
@@ -28,7 +28,6 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  position: relative;
   z-index: 1001;
 }
 
@@ -37,17 +36,15 @@ body {
   align-items: center;
   gap: 8px;
   font-weight: 600;
-  font-size: 18px;
 }
 
-.logo img {
-  width: 32px;
-}
-
-/* ===== Auth Buttons ===== */
 .auth-btns {
   display: flex;
   gap: 8px;
+}
+
+button {
+  cursor: pointer;
 }
 
 #loginBtn {
@@ -66,13 +63,12 @@ body {
   border-radius: 6px;
 }
 
-/* ===== Map ===== */
+/* Map */
 #map {
   height: calc(100vh - 60px);
-  width: 100%;
 }
 
-/* ===== Form ===== */
+/* Form */
 #formBox {
   display: none;
   position: absolute;
@@ -82,27 +78,21 @@ body {
   background: white;
   padding: 16px;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 25px rgba(0,0,0,.2);
   z-index: 1002;
 }
 
-#formBox input,
-#formBox textarea {
+#formBox input, #formBox textarea {
   width: 100%;
+  margin-bottom: 6px;
   padding: 8px;
   border-radius: 6px;
   border: 1px solid #ddd;
 }
 
-textarea {
-  resize: none;
-  height: 70px;
-}
-
 .form-actions {
   display: flex;
   gap: 8px;
-  margin-top: 10px;
 }
 
 .save-btn {
@@ -121,35 +111,13 @@ textarea {
   padding: 8px;
   border-radius: 6px;
 }
-
-/* ===== Mobile ===== */
-@media (max-width: 768px) {
-  .logo span { font-size: 16px; }
-
-  .auth-btns button {
-    font-size: 13px;
-    padding: 6px 10px;
-  }
-
-  #formBox {
-    width: calc(100% - 20px);
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    top: auto;
-    border-radius: 16px;
-  }
-}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-  <div class="logo">
-    <img src="logo.png">
-    <span>Pin2Deal</span>
-  </div>
+  <div class="logo">📍 Pin2Deal</div>
   <div class="auth-btns">
     <button id="loginBtn">เข้าสู่ระบบ</button>
     <button id="registerBtn">สมัครสมาชิก</button>
@@ -163,7 +131,6 @@ textarea {
   <input id="title" placeholder="ชื่อสินค้า">
   <input id="price" placeholder="ราคา">
   <textarea id="detail" placeholder="รายละเอียด"></textarea>
-  <input type="file" id="images" multiple>
   <div class="form-actions">
     <button class="save-btn">บันทึก</button>
     <button class="cancel-btn">ยกเลิก</button>
@@ -174,3 +141,4 @@ textarea {
 <script src="script.js"></script>
 </body>
 </html>
+
