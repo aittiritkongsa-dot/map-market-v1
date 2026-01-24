@@ -16,8 +16,12 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 var admin = require("firebase-admin");
 
-var serviceAccount = require("path/to/serviceAccountKey.json");
+FileInputStream serviceAccount =
+new FileInputStream("path/to/serviceAccountKey.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
+FirebaseOptions options = new FirebaseOptions.Builder()
+  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+  .build();
+
+FirebaseApp.initializeApp(options);
+};
